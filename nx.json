@@ -14,7 +14,13 @@
     "default": {
       "runner": "@nrwl/workspace/tasks-runners/default",
       "options": {
-        "cacheableOperations": ["build", "lint", "test", "e2e"]
+        "cacheableOperations": [
+          "build",
+          "lint",
+          "test",
+          "e2e",
+          "build-storybook"
+        ]
       }
     }
   },
@@ -24,7 +30,18 @@
     },
     "seguro-canguro-e2e": {
       "tags": [],
-      "implicitDependencies": ["seguro-canguro"]
+      "implicitDependencies": [
+        "seguro-canguro"
+      ]
+    },
+    "cui": {
+      "tags": []
+    },
+    "cui-e2e": {
+      "tags": [],
+      "implicitDependencies": [
+        "cui"
+      ]
     }
   }
 }

@@ -25,7 +25,10 @@
               "apps/seguro-canguro/src/favicon.ico",
               "apps/seguro-canguro/src/assets"
             ],
-            "styles": ["apps/seguro-canguro/src/styles.scss"],
+            "styles": [
+              "apps/seguro-canguro/src/styles.scss",
+              "globals/normalize.css"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -83,7 +86,10 @@
               "apps/seguro-canguro/tsconfig.app.json",
               "apps/seguro-canguro/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!apps/seguro-canguro/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/seguro-canguro/**"
+            ]
           }
         },
         "test": {
@@ -118,8 +124,113 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": ["apps/seguro-canguro-e2e/tsconfig.e2e.json"],
-            "exclude": ["**/node_modules/**", "!apps/seguro-canguro-e2e/**"]
+            "tsConfig": [
+              "apps/seguro-canguro-e2e/tsconfig.e2e.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/seguro-canguro-e2e/**"
+            ]
+          }
+        }
+      }
+    },
+    "cui": {
+      "projectType": "library",
+      "root": "libs/cui",
+      "sourceRoot": "libs/cui/src",
+      "prefix": "cui",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/cui/tsconfig.lib.json",
+              "libs/cui/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/cui/**"
+            ],
+            "styles": [
+              "globals/normalize.css"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/cui/jest.config.js",
+            "tsConfig": "libs/cui/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/cui/src/test-setup.ts"
+          }
+        },
+        "storybook": {
+          "builder": "@nrwl/storybook:storybook",
+          "options": {
+            "uiFramework": "@storybook/angular",
+            "port": 4400,
+            "config": {
+              "configFolder": "libs/cui/.storybook"
+            }
+          },
+          "configurations": {
+            "ci": {
+              "quiet": true
+            }
+          }
+        },
+        "build-storybook": {
+          "builder": "@nrwl/storybook:build",
+          "options": {
+            "uiFramework": "@storybook/angular",
+            "outputPath": "dist/storybook/cui",
+            "config": {
+              "configFolder": "libs/cui/.storybook"
+            }
+          },
+          "configurations": {
+            "ci": {
+              "quiet": true
+            }
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      }
+    },
+    "cui-e2e": {
+      "root": "apps/cui-e2e",
+      "sourceRoot": "apps/cui-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/cui-e2e/cypress.json",
+            "tsConfig": "apps/cui-e2e/tsconfig.e2e.json",
+            "devServerTarget": "cui:storybook"
+          },
+          "configurations": {
+            "ci": {
+              "devServerTarget": "cui:storybook:ci"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/cui-e2e/tsconfig.e2e.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/cui-e2e/**"
+            ]
           }
         }
       }

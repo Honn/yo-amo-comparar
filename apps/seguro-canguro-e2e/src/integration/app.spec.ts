@@ -1,4 +1,4 @@
-import { getGreeting } from '../support/app.po';
+import { getGreeting, getTodos, getAddTodoButton,  } from '../support/app.po';
 
 describe('seguro-canguro', () => {
   beforeEach(() => cy.visit('/'));
@@ -9,5 +9,16 @@ describe('seguro-canguro', () => {
 
     // Function helper example, see `../support/app.po.ts` file
     getGreeting().contains('Welcome to seguro-canguro!');
+  });
+});
+
+
+describe('TodoApps', () => {
+  beforeEach(() => cy.visit('/'));
+
+  it('should display todos', () => {
+    getTodos().should(t => expect(t.length).equal(2));
+    getAddTodoButton().click();
+    getTodos().should(t => expect(t.length).equal(3));
   });
 });
